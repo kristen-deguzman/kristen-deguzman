@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kristen de Guzman</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #F7F4EF;
+    --warm-white: #FDFBF8;
+    --stone: #E8E2D9;
+    --sand: #C8BFB0;
+    --taupe: #9B8F82;
+    --bark: #6B5F54;
+    --espresso: #2C2420;
+    --ink: #1A1512;
+    --accent: #B07D5A;
+    --accent-light: #D4A882;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 3rem;
+    background: rgba(247, 244, 239, 0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-bottom-color: var(--stone); }
+  .nav-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--bark);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 3rem 4rem;
+    gap: 4rem;
+    position: relative;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    background: var(--stone);
+    z-index: 0;
+    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+  }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.35s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--bark);
+    max-width: 400px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+  }
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.65s forwards;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    border: 1.5px solid var(--ink);
+  }
+  .btn-primary:hover { background: var(--espresso); border-color: var(--espresso); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--bark);
+  }
+  .btn-outline:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+  .hero-visual {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-placeholder {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3/4;
+    background: var(--sand);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--taupe);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    border: 1px dashed var(--taupe);
+    opacity: 0;
+    animation: fadeUp 0.7s 0.5s forwards;
+    text-align: center;
+    padding: 2rem;
+  }
+  .hero-placeholder svg { opacity: 0.5; }
+
+  /* ── SECTION SHARED ── */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 3rem;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  /* ── ABOUT ── */
+  #about { background: var(--warm-white); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .about-left {}
+  .about-body {
+    font-size: 1.05rem;
+    color: var(--bark);
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .stat-card {
+    padding: 1.25rem;
+    background: var(--cream);
+    border-left: 2px solid var(--accent);
+  }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--taupe);
+    margin-top: 0.25rem;
+    text-transform: uppercase;
+  }
+  .about-image-placeholder {
+    aspect-ratio: 4/5;
+    background: var(--stone);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--taupe);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    border: 1px dashed var(--sand);
+    text-align: center;
+    padding: 2rem;
+  }
+
+  /* ── RESUME ── */
+  #resume { background: var(--cream); }
+  .resume-inner { max-width: 900px; margin: 0 auto; }
+
+  .resume-block { margin-bottom: 3.5rem; }
+  .resume-block-title {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--stone);
+    margin-bottom: 1.75rem;
+  }
+
+  .job {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--stone);
+  }
+  .job:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .job-meta {}
+  .job-date {
+    font-size: 0.78rem;
+    color: var(--taupe);
+    letter-spacing: 0.05em;
+    line-height: 1.5;
+  }
+  .job-detail {}
+  .job-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+  .job-company {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+  .job-bullets { padding-left: 1rem; }
+  .job-bullets li {
+    font-size: 0.92rem;
+    color: var(--bark);
+    line-height: 1.7;
+    margin-bottom: 0.4rem;
+    list-style: none;
+    position: relative;
+    padding-left: 1rem;
+  }
+  .job-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--sand);
+    font-weight: 300;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.75rem;
+  }
+  .skill-tag {
+    padding: 0.6rem 1rem;
+    background: var(--warm-white);
+    border: 1px solid var(--stone);
+    border-radius: 2px;
+    font-size: 0.82rem;
+    color: var(--bark);
+    letter-spacing: 0.03em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--ink); }
+
+  .edu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+  }
+  .edu-school {
+    font-size: 0.82rem;
+    color: var(--taupe);
+    margin-top: 0.2rem;
+    letter-spacing: 0.04em;
+  }
+  .edu-gpa {
+    font-size: 0.82rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .download-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.75rem;
+    background: var(--espresso);
+    border-radius: 2px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .download-bar-text {
+    font-size: 0.9rem;
+    color: var(--sand);
+    letter-spacing: 0.03em;
+  }
+  .btn-light {
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid var(--sand);
+    padding: 0.5rem 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .btn-light:hover { background: rgba(255,255,255,0.1); }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center;
+  }
+  #contact .section-label { color: var(--accent-light); }
+  #contact .section-title { color: var(--cream); margin-bottom: 1rem; }
+  .contact-sub {
+    font-size: 1rem;
+    color: var(--sand);
+    max-width: 440px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--cream);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--bark);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-link:hover { color: var(--accent-light); border-color: var(--accent-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--espresso);
+    color: var(--taupe);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; }
+    .hero::after { display: none; }
+    .hero-visual { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-image-placeholder { display: none; }
+    .job { grid-template-columns: 1fr; gap: 0.5rem; }
+    .job-date { font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-name">Kristen de Guzman</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Partnerships &amp; Business Development</p>
+    <h1 class="hero-name">Kristen<br><em>de Guzman</em></h1>
+    <p class="hero-sub">Founding sales &amp; partnerships leader. I build revenue infrastructure, forge strategic alliances, and turn zero into something scalable.</p>
+    <div class="hero-cta">
+      <a href="#resume" class="btn btn-primary">View Resume</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-placeholder">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      <span>Add your photo here</span>
+      <span style="font-size:0.72rem; opacity:0.7;">Replace with &lt;img src="photo.jpg"&gt;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div>
+      <p class="section-label reveal">About</p>
+      <h2 class="section-title reveal">Relationship-<em>driven</em><br>growth leader</h2>
+      <p class="about-body reveal">I'm wired to build from zero. At every stage of my career — nonprofit, CPG, AI startup — I've stepped in as the first person to own a function and built the infrastructure, relationships, and revenue from scratch.</p>
+      <p class="about-body reveal">Fluent in every stakeholder language: donor, distributor, partner, and end user. Proven at turning trust into scalable, repeatable revenue.</p>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">1900%</div>
+          <div class="stat-label">Referral revenue growth in 90 days</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">90%</div>
+          <div class="stat-label">Partner retention over 5 years</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">35%</div>
+          <div class="stat-label">Close rate on new product</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">$500K+</div>
+          <div class="stat-label">Raised via Legacy Ball in 3 years</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="about-image-placeholder reveal">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        <span>Add a photo here</span>
+        <span style="font-size:0.72rem; opacity:0.7;">Replace with &lt;img src="about.jpg"&gt;</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="resume-inner">
+    <p class="section-label reveal">Resume</p>
+    <h2 class="section-title reveal">Work <em>Experience</em></h2>
+
+    <div class="download-bar reveal">
+      <span class="download-bar-text">Want the full PDF version?</span>
+      <a href="Kristen_deGuzman_Revolut_BDM.docx" class="btn-light" download>Download Resume ↓</a>
+    </div>
+
+    <!-- Experience -->
+    <div class="resume-block reveal">
+      <div class="resume-block-title">Experience</div>
+
+      <div class="job">
+        <div class="job-meta">
+          <div class="job-date">Feb 2026 – Present<br>Los Angeles, CA</div>
+        </div>
+        <div class="job-detail">
+          <div class="job-title">Head of Client Experience</div>
+          <div class="job-company">Helm — Founding Team</div>
+          <ul class="job-bullets">
+            <li>Founding sales hire; own full GTM strategy and closing pipeline for new API-integrated SaaS product across B2B and B2C</li>
+            <li>Achieved 35% close rate on brand-new product with no prior sales motion</li>
+            <li>Built GTM infrastructure using AI tooling including custom Claude projects</li>
+            <li>Solely represented client voice in engineering scrum, synthesizing user feedback into product priorities</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-meta">
+          <div class="job-date">Jan 2025 – Jun 2025<br>Remote</div>
+        </div>
+        <div class="job-detail">
+          <div class="job-title">Head of Partnerships</div>
+          <div class="job-company">Buoy Hydration</div>
+          <ul class="job-bullets">
+            <li>Delivered 1,900% growth in referral program revenue in 90 days by creating affiliate structure from scratch</li>
+            <li>Built CRM strategy converting high-volume sourced leads to 100+ revenue-driving partners</li>
+            <li>Collaborated weekly with marketing and operations on white-glove partner service</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="job">
+        <div class="job-meta">
+          <div class="job-date">May 2020 – Jan 2025<br>Remote</div>
+        </div>
+        <div class="job-detail">
+          <div class="job-title">Business Development Manager</div>
+          <div class="job-company">Legacy Youth Leadership</div>
+          <ul class="job-bullets">
+            <li>Achieved 90% retention rate within partner portfolio over 5 years</li>
+            <li>Generated $100,000+ yearly in referrals through strategic relationship building</li>
+            <li>Founded and chaired Legacy Ball, raising over $500,000 in 3 years</li>
+            <li>Owned full sales cycle for a 6-figure portfolio across individual, SMB, enterprise, and foundation partners</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="resume-block reveal">
+      <div class="resume-block-title">Skills</div>
+      <div class="skills-grid">
+        <div class="skill-tag">Partnership Strategy</div>
+        <div class="skill-tag">Business Development</div>
+        <div class="skill-tag">Full-Cycle Sales</div>
+        <div class="skill-tag">GTM Infrastructure</div>
+        <div class="skill-tag">CRM &amp; Pipeline Management</div>
+        <div class="skill-tag">Executive Relationship Mgmt</div>
+        <div class="skill-tag">AI-Native Workflows</div>
+        <div class="skill-tag">Cross-Functional Ops</div>
+        <div class="skill-tag">Google Workspace</div>
+        <div class="skill-tag">Notion / Linear / Slack</div>
+        <div class="skill-tag">Claude &amp; ChatGPT</div>
+        <div class="skill-tag">0-to-1 Systems Building</div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="resume-block reveal">
+      <div class="resume-block-title">Education</div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.5rem;">
+        <div>
+          <div class="edu-degree">B.S. Business Administration, Management</div>
+          <div class="edu-school">University of Nevada, Reno — Cum Laude, Dean's List</div>
+        </div>
+        <div class="edu-gpa">3.8 / 4.0</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Contact</p>
+  <h2 class="section-title">Let's <em>connect</em></h2>
+  <p class="contact-sub">Open to new opportunities in partnerships, business development, and GTM leadership.</p>
+  <div class="contact-links">
+    <a href="mailto:hi@kristendeguzman.com" class="contact-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      hi@kristendeguzman.com
+    </a>
+    <a href="tel:7024431769" class="contact-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.01 2.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+      (702) 443-1769
+    </a>
+    <a href="https://linkedin.com/in/kristendeguzman" target="_blank" class="contact-link">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2026 Kristen de Guzman &nbsp;·&nbsp; Los Angeles, CA
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
